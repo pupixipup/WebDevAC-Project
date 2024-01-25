@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.json({ hello: "world" })
 })
 
-// AUTHENTICATION STUFF ------------
+// AUTHENTICATION STUFF ------------ START
 const users = [] // PUT IN DATABASE
 let refreshTokens = [] // should be stored in a "Redis" it says
 
@@ -85,7 +85,7 @@ app.delete("/logout", (req, res) => {
 
   res.status(204).send("Logged out!")
 })
-// AUTHENTICATION STUFF ------------
+// AUTHENTICATION STUFF ------------ END
 
 console.log("env:", process.env.MONGO_URL)
 
