@@ -29,8 +29,8 @@ app.listen(port, () => {
   console.log(`validation server running on port ${port}`)
 })
 
-app.get("/posts", validateToken, (req, res) => {
-  console.log("Token is valid")
-  console.log(req.user.user)
-  res.send(`${req.user.user} successfully accessed post`)
-})
+// app.get("/posts", validateToken, (req, res) => {
+//   console.log("Token is valid")
+//   console.log(req.user.user)
+//   res.send(`${req.user.user} successfully accessed post`)
+// })

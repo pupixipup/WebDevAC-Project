@@ -7,6 +7,7 @@ require("dotenv").config()
 
 const port = 3000
 const connection = mongoose.connect(process.env.MONGO_URL)
+const { validateJwtToken } = require("./middleware/validateJwtToken")
 
 app.use(express.json())
 
@@ -68,6 +69,7 @@ app.post("/login", async (req, res) => {
   }
 })
 
+// UNTESTED!!!!
 app.post("/refreshToken", (req, res) => {
   if (!refreshTokens.includes(req.body.token)) {
     res.status(400).send("Refresh token invalid")
@@ -84,6 +86,12 @@ app.delete("/logout", (req, res) => {
   refreshTokens = refreshTokens.filter((c) => c != req.body.token)
 
   res.status(204).send("Logged out!")
+})
+
+app.get("/posts", validateJwtToken, (req, res) => {
+  console.log("Token is valid")
+  console.log(req.user.user)
+  res.send(`${req.user.user} successfully accessed post`)
 })
 // AUTHENTICATION STUFF ------------ END
 
