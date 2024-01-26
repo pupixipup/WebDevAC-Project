@@ -24,14 +24,16 @@ app.get("/", (req, res) => {
   res.json({ hello: "world" })
 })
 
-// AUTHENTICATION STUFF ------------ START
+// AUTHENTICATION STUFF ------------------------------------------- START
 const users = [] // PUT IN DATABASE
 let refreshTokens = [] // should be stored in a "Redis" it says
 
+//Needs to test if a user was given, right now it runs anyway
 function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" })
 }
 
+//Needs to test if a user was given
 function generateRefreshToken(user) {
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "20m",
@@ -53,7 +55,6 @@ app.post("/createUser", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const user = users.find((c) => c.user == req.body.name)
-  console.log(user)
 
   if (!user) res.status(404).send("User does not exist")
   else if (await bcrypt.compare(req.body.password, user.password)) {
@@ -69,7 +70,8 @@ app.post("/login", async (req, res) => {
   }
 })
 
-// UNTESTED!!!!
+// Test more
+// Needs to also take in user name in body and test if user exists
 app.post("/refreshToken", (req, res) => {
   if (!refreshTokens.includes(req.body.token)) {
     res.status(400).send("Refresh token invalid")
@@ -82,6 +84,7 @@ app.post("/refreshToken", (req, res) => {
   res.json({ accessToken: accessToken, refreshToken: refreshToken })
 })
 
+// Needs to do more things like remove the accesstoken
 app.delete("/logout", (req, res) => {
   refreshTokens = refreshTokens.filter((c) => c != req.body.token)
 
@@ -93,7 +96,7 @@ app.get("/posts", validateJwtToken, (req, res) => {
   console.log(req.user.user)
   res.send(`${req.user.user} successfully accessed post`)
 })
-// AUTHENTICATION STUFF ------------ END
+// AUTHENTICATION STUFF ------------------------------------------- END
 
 console.log("env:", process.env.MONGO_URL)
 
