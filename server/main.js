@@ -4,7 +4,11 @@ const app = express()
 require("dotenv").config()
 
 const port = 3000
-const connection = mongoose.connect(process.env.MONGO_URL)
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("Successful DB connection"))
+  .catch((err) => console.log(`Connection failed ${err}`))
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
