@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
+const Location = require("./model/Location")
 require("dotenv").config()
 
 const port = 3000
@@ -21,6 +22,11 @@ app.use(function (req, res, next) {
 
 app.get("/", (req, res) => {
   res.json({ hello: "world" })
+})
+
+app.get("/locations", async (req,res) => {
+  const locations = await Location.find();
+  res.json(locations)
 })
 
 console.log("env:", process.env.MONGO_URL)
