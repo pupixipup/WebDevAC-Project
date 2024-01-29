@@ -7,7 +7,10 @@ const locationSchema = new mongoose.Schema({
         allowNull: true
     },
     address: String,
+    url: String,
     map_frame: String,
+    image: String,
+    category: String
 })
 
 const Location = mongoose.model("Location", locationSchema)
