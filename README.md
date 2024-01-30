@@ -1,17 +1,22 @@
 # The course project for Web Development: Advanced Concepts
 
-## Running client
+## Requirements
+
+- Docker installed
+- Modules installed: `npm install`
+- .env file in the `server` folder
+
+## Running entire project
+
+- `npm start`
+
+## Running separately
+
+### Client
 
 - `cd client` `npm run dev`
 
-## Running server
-
-### Requirements
-
-- Docker installed
-- .env file in the `server` folder
-
-### Process
+### Server
 
 1. `cd server`
 2. `docker compose up -d` launch mongodb in Docker container
