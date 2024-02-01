@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
 const Location = require("./model/Location")
-const {query} = require("express");
+const { query } = require("express");
 require("dotenv").config()
 
 const port = 3000
@@ -27,12 +27,11 @@ app.get("/", (req, res) => {
   res.json({ hello: "world" })
 })
 
-app.get("/locations", async (req,res) => {
+app.get("/locations", async (req, res) => {
   const from = req.query.from;
-  const locations = await Location.find().limit(10).skip(from);
-  console.log(from, locations[0].name)
+  const locations = await Location.find().limit(10).skip(from)
   const count = await Location.countDocuments()
-  res.json({locations, count})
+  res.json({ locations, count })
 })
 
 console.log("env:", process.env.MONGO_URL)

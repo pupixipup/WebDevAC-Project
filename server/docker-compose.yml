@@ -9,6 +9,14 @@ services:
       - 27017:27017
     volumes:
       - mongodata:/data/db
+  web-app:
+    image: web-app
+    environment:
+      MONGO_URL: mongodb://mongoadmin:zalupa@mongo:27017/admin
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
 volumes:
   mongodata:
     driver: local
