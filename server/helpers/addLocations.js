@@ -3,7 +3,7 @@ const Location = require("../model/Location")
 const locations = require("../stores.json")
 
 async function addLocations() {
-  await mongoose.connect("mongodb://mongoadmin:zalupa@localhost:27017/admin")
+  await mongoose.connect('<url>')
   await Location.deleteMany({})
   for (const obj of locations) {
     try {

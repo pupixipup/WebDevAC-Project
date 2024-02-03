@@ -1,22 +1,22 @@
 version: "3.8"
 services:
-  mongo:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongoadmin
-      MONGO_INITDB_ROOT_PASSWORD: zalupa
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodata:/data/db
+  # mongo:
+  #   image: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: mongoadmin
+  #     MONGO_INITDB_ROOT_PASSWORD: zalupa
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - mongodata:/data/db
   web-app:
     image: web-app
     environment:
-      MONGO_URL: mongodb://mongoadmin:zalupa@mongo:27017/admin
+      MONGO_URL: ${MONGO_URL}
     ports:
       - 3000:3000
-    depends_on:
-      - mongo
-volumes:
-  mongodata:
-    driver: local
+#     depends_on:
+#       - mongo
+# volumes:
+#   mongodata:
+#     driver: local
