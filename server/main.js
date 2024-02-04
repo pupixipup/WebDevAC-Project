@@ -28,19 +28,20 @@ app.get("/", (req, res) => {
 })
 
 app.get("/locations", async (req, res) => {
+  try {
   const from = req.query.from;
   let category = req.query.category;
   let query = {};
   if (category && categories[category]) {
-    // console.log(typeof categories[category], categories[category])
-    // query.category = { $in: categories[category] }
-    query.category = "Optiker"
+    query.category = { $in: categories[category] }
   };
-  query = { category: { $in: categories[category] }}
-  const locations = await Location.find(query)
-  console.log(locations)
-  const count = await Location.countDocuments()
+  const locations = await Location.find(query).limit(10).skip(from)
+  const count = await Location.countDocuments(query)
   res.json({ locations, count })
+} 
+catch (err) {
+  console.log(err)
+}
 })
 
 console.log("env:", process.env.MONGO_URL)

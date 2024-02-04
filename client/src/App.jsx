@@ -14,13 +14,6 @@ function App() {
   const [from, setFrom] = useState(0)
   const [count, setCount] = useState(0)
   const [category, setCategory] = useState()
-  useEffect(() => {
-  fetchData()
-  }, [])
-
-  
-
-
 
   async function fetchData() {
     let url = `http://localhost:3000/locations?from=${from}&`
@@ -50,8 +43,9 @@ function App() {
   return (<div>
     <div>
     <div className="categories">{Object.keys(categories).map((cat) => <Category onClick={() => {
+      setLocations([])
+      setFrom(0)
       setCategory(cat)
-      console.log(category)
     }} key={cat}>{cat}</Category>)}</div>
       <div className="container">
         {locations.map(el => (
