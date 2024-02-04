@@ -1,0 +1,78 @@
+{
+  "Fashion": [
+    "Varuhus",
+    "Bokhandel",
+    "Klänningsbutik",
+    "Butik för modetillbehör",
+    "Klädbutik",
+    "Skobutik",
+    "Herrkläder",
+    "Dambutik",
+    "Bröllopsbutik",
+    "Barnkläder",
+    "Damunderkläder"
+  ],
+  "Health and Beauty": [
+    "Apotek",
+    "Tatuerare",
+    "Hälsa och skönhet, butik",
+    "Massageterapeut",
+    "Smyckesbutik",
+    "Sminkbutik"
+  ],
+  "Food and Groceries": [
+    "Livsmedelsbutik",
+    "Godisaffär",
+    "Ekologisk butik",
+    "Hälsokostbutik",
+    "Stormarknad",
+    "Närbutik",
+    "Fiskaffär"
+  ],
+  "Electronics": [
+    "Elektronikbutik",
+    "Fotobutik",
+    "Optiker"
+  ],
+  "Home and Decor": [
+    "Heminredningsbutik",
+    "Kemtvätt",
+    "Ramaffär",
+    "Inredningsföretag",
+    "Möbelaffär",
+    "Markiser, leverantör"
+  ],
+  "Hobbies and Entertainment": [
+    "Juvelerare",
+    "Dyksportaffär",
+    "Spelbutik",
+    "Konstgalleri",
+    "Partybutik",
+    "Sexbutik"
+  ],
+  "Services": [
+    "Butik",
+    "Kontorshotell",
+    "Fotograf",
+    "Urmakare",
+    "Klockbutik",
+    "Valutaväxling",
+    "Ideell förening",
+    "Resebyrå"
+  ],
+  "Specialty Stores": [
+    "Secondhandbutik",
+    "Butik – ortopediska skor",
+    "Guldhandlare",
+    "Second handbutiker",
+    "Skomakare",
+    "Tillverkare av lädervaror",
+    "Väskor, butik",
+    "Begravningsbyrå",
+    "Låssmed"
+  ],
+  "Others": [
+    "Övrig",
+    "Alkoholhaltiga drycker, detaljhandel med monopol"
+  ]
+}

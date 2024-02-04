@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
 const Location = require("./model/Location")
-const { query } = require("express");
+const categories = require("./generalized_categories.json")
 require("dotenv").config()
 
 const port = 3000
@@ -29,7 +29,16 @@ app.get("/", (req, res) => {
 
 app.get("/locations", async (req, res) => {
   const from = req.query.from;
-  const locations = await Location.find().limit(10).skip(from)
+  let category = req.query.category;
+  let query = {};
+  if (category && categories[category]) {
+    // console.log(typeof categories[category], categories[category])
+    // query.category = { $in: categories[category] }
+    query.category = "Optiker"
+  };
+  query = { category: { $in: categories[category] }}
+  const locations = await Location.find(query)
+  console.log(locations)
   const count = await Location.countDocuments()
   res.json({ locations, count })
 })
