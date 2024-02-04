@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use(express.static('public'))
+app.use(express.static("public"))
 
 app.get("/", (req, res) => {
   res.json({ hello: "world" })
@@ -29,20 +29,22 @@ app.get("/", (req, res) => {
 
 app.get("/locations", async (req, res) => {
   try {
-  const from = req.query.from;
-  const sort = req.query.sort;
-  let category = req.query.category;
-  let query = {};
-  if (category && categories[category]) {
-    query.category = { $in: categories[category] }
-  };
-  const locations = await Location.find(query).sort({name: sort}).limit(10).skip(from)
-  const count = await Location.countDocuments(query)
-  res.json({ locations, count })
-} 
-catch (err) {
-  console.log(err)
-}
+    const from = parseInt(req.query.from) || 0;
+    const sort = req.query.sort
+    let category = req.query.category
+    let query = {}
+    if (category && categories[category]) {
+      query.category = { $in: categories[category] }
+    }
+    const locations = await Location.find(query)
+      .sort({ name: sort })
+      .skip(from)
+      .limit(10)
+    const count = await Location.countDocuments(query)
+    res.json({ locations, count })
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 console.log("env:", process.env.MONGO_URL)
