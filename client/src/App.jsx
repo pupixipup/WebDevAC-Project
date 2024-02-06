@@ -15,7 +15,7 @@ function App() {
   const [sort, setSort] = useState("asc")
 
   async function fetchData() {
-    const url = new URL(import.meta.env + "/locations");
+    const url = new URL(import.meta.env.VITE_BASE_URL + "/locations");
     url.searchParams.append("from", from)
     url.searchParams.append("sort", sort)
     if (category) {
