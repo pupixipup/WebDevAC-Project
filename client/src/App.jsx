@@ -15,6 +15,7 @@ function App() {
   const [sort, setSort] = useState("asc")
 
   async function fetchData() {
+    console.log(1)
     const url = new URL(import.meta.env.VITE_BASE_URL + "/locations");
     url.searchParams.append("from", from)
     url.searchParams.append("sort", sort)
@@ -41,7 +42,7 @@ function App() {
 
   useEffect(() => {
     fetchData()
-  }, [category, sort, fetchData])
+  }, [category, sort])
 
   return (
     <div>
