@@ -13,15 +13,18 @@ function App() {
   const [count, setCount] = useState(0)
   const [category, setCategory] = useState()
   const [sort, setSort] = useState("asc")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState()
 
   async function fetchData() {
-    console.log(1)
+    setLoading(true)
     const url = new URL(import.meta.env.VITE_BASE_URL + "/locations");
     url.searchParams.append("from", from)
     url.searchParams.append("sort", sort)
     if (category) {
       url.searchParams.append("category", category)
     }
+    try {
     const request = await fetch(url)
     const json = await request.json()
     const { locations: locs, count } = json
@@ -38,11 +41,28 @@ function App() {
     setFrom((from) => {
       return from + PAGE_LIMIT
     })
+  } catch (err) {
+    setError(err);
+  } finally {
+  setLoading(false)
+  }
   }
 
   useEffect(() => {
     fetchData()
   }, [category, sort])
+
+  if (error) {
+
+    return <div>
+      <h1 style={{textAlign: "center"}}>Error: {error.message}</h1>
+      <button style={{ margin: "0 auto", display: 'flex'}} onClick={() => window.location.reload()}>Reload</button>
+      </div>
+  }
+
+  if (loading) {
+    return <h1 style={{textAlign: "center"}}>LOADING</h1>
+  }
 
   return (
     <div>
@@ -51,7 +71,7 @@ function App() {
           {Object.keys(categories).map((cat) => (
             <Category
               onClick={() => {
-   
+                if (cat === category) return;
                 setLocations([])
                 setFrom(0)
                 setCategory(cat)
@@ -69,7 +89,6 @@ function App() {
                 setSort(option)
                 setLocations([])
                 setFrom(0)
-                console.log(locations)
               }}
               key={option}
             >
