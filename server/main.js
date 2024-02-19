@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
 const Location = require("./model/Location")
-const {query} = require("express");
+const categories = require("./generalized_categories.json")
 require("dotenv").config()
 
 const port = 3000
@@ -21,22 +21,34 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use(express.static('public'))
+app.use(express.static("public"))
 
 app.get("/", (req, res) => {
   res.json({ hello: "world" })
 })
 
-app.get("/locations", async (req,res) => {
-  const from = req.query.from;
-  const locations = await Location.find().limit(10).skip(from);
-  console.log(from, locations[0].name)
-  const count = await Location.countDocuments()
-  res.json({locations, count})
+app.get("/locations", async (req, res) => {
+  try {
+    const from = parseInt(req.query.from) || 0;
+    const sort = req.query.sort
+    let category = req.query.category
+    let query = {}
+    if (category && categories[category]) {
+      query.category = { $in: categories[category] }
+    }
+    const locations = await Location.find(query)
+      .sort({ name: sort })
+      .skip(from)
+      .limit(10)
+    const count = await Location.countDocuments(query)
+    res.json({ locations, count })
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 console.log("env:", process.env.MONGO_URL)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`App listening on port ${port}`)
 })
