@@ -1,4 +1,5 @@
 import styles from "./Card.module.css"
+import { normalizeLink } from "../shared/helpers";
 
 export const LocationCard = ({ location }) => {
   const { address, category, image, name, url } = location;
@@ -11,10 +12,4 @@ export const LocationCard = ({ location }) => {
     <a href={normalizeLink(url)} className={styles.link}>Link</a>
    </div>
     </div>
-}
-
-function normalizeLink(link) {
-  if (typeof link !== "string") return null;
-  if (link.includes("https://")) return link;
-  return "https://" + link;
 }

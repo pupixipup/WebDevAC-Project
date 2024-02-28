@@ -47,6 +47,16 @@ app.get("/locations", async (req, res) => {
   }
 })
 
+app.get("/locations/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const location = await Location.findById(id)
+    res.json(location)
+  } catch (err) {
+    console.log(err)
+  }
+});
+
 console.log("env:", process.env.MONGO_URL)
 
 app.listen(port, () => {
