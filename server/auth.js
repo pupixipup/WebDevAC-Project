@@ -1,70 +1,69 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const User = require("./models/userModel")
 require("dotenv").config()
 
-const users = [] // PUT IN DATABASE
 let refreshTokens = [] // should be stored in a "Redis" it says
 
-//Needs to test if a user was given, right now it runs anyway
-function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" })
+function generateAccessToken(id) {
+  return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" })
 }
 
-//Needs to test if a user was given, right now it runs anyway
-function generateRefreshToken(user) {
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "20m",
-  })
-  refreshTokens.push(refreshToken)
-  return refreshToken
-}
+// function generateRefreshToken(id) {
+//   const refreshToken = jwt.sign(id, process.env.REFRESH_TOKEN_SECRET, {
+//     expiresIn: "20m",
+//   })
+//   refreshTokens.push(refreshToken)
+//   return refreshToken
+// }
 
 class AuthClass {
-  async createUser(req) {
-    const user = req.body.name
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+  async createUser(req, res) {
+    const { email, password } = req.body
 
-    users.push({ user: user, password: hashedPassword })
+    try {
+      const user = await User.signup(email, password)
 
-    return users
-  }
+      const token = generateAccessToken(user._id)
 
-  async login(req) {
-    const user = users.find((c) => c.user == req.body.name)
-
-    if (!user) {
-      return {
-        loginSuccess: false,
-        loginError: "User does not exist",
-      }
-    } else if (await bcrypt.compare(req.body.password, user.password)) {
-      console.log("Got to login")
-      const accessToken = generateAccessToken({ user: req.body.name })
-      const refreshToken = generateRefreshToken({ user: req.body.name })
-      return {
-        loginSuccess: true,
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      }
-    } else {
-      return {
-        loginSuccess: false,
-        loginError: "Incorrect password",
-      }
+      res.status(200).json({ email, token })
+    } catch (error) {
+      res.status(400).json({ error: error.message })
     }
   }
 
-  refreshToken(req) {
-    if (!refreshTokens.includes(req.body.token)) {
-      return "Refresh token is invalid"
-    } else {
-      refreshTokens = refreshTokens.filter((c) => c != req.body.token)
-      const accessToken = generateAccessToken({ user: req.body.name })
-      const refreshToken = generateRefreshToken({ user: req.body.name })
+  async login(req, res) {
+    const { email, password } = req.body
 
-      return { accessToken: accessToken, refreshToken: refreshToken }
+    try {
+      const user = await User.login(email, password)
+
+      const token = generateAccessToken(user._id)
+
+      res.status(200).json({ email, token })
+    } catch (error) {
+      res.status(400).json({ error: error.message })
     }
   }
+
+  // Test function
+  async getUsers(req, res) {
+    const allUsers = await User.find({})
+
+    res.status(200).json(allUsers)
+  }
+
+  // refreshToken(req) {
+  //   if (!refreshTokens.includes(req.body.token)) {
+  //     return "Refresh token is invalid"
+  //   } else {
+  //     refreshTokens = refreshTokens.filter((c) => c != req.body.token)
+  //     const accessToken = generateAccessToken({ user: req.body.name })
+  //     const refreshToken = generateRefreshToken({ user: req.body.name })
+
+  //     return { accessToken: accessToken, refreshToken: refreshToken }
+  //   }
+  // }
 }
 
 module.exports = AuthClass

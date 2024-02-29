@@ -27,43 +27,27 @@ app.get("/", (req, res) => {
 
 // AUTHENTICATION STUFF ------------------------------------------- START
 app.post("/createUser", async (req, res) => {
-  const users = await Auth.createUser(req)
-  res.status(201).send(users)
-  console.log(users)
+  Auth.createUser(req, res)
 })
 
 app.post("/login", async (req, res) => {
-  loginResults = await Auth.login(req)
-
-  if (!loginResults.loginSuccess) {
-    res.status(400).send(loginResults.loginError)
-  } else {
-    res.json({
-      accessToken: loginResults.accessToken,
-      refreshToken: loginResults.refreshToken,
-    })
-  }
+  Auth.login(req, res)
 })
 
-// Test more
-// Needs to also take in user name in body and test if user exists
-app.post("/refreshToken", (req, res) => {
-  const refreshTokenResponse = Auth.refreshToken(req)
-
-  res.json(refreshTokenResponse)
+// remove after testing
+app.get("/getUsers", async (req, res) => {
+  Auth.getUsers(req, res)
 })
 
-// Needs to do more things like remove the accesstoken
-app.delete("/logout", (req, res) => {
-  refreshTokens = refreshTokens.filter((c) => c != req.body.token)
-
-  res.status(204).send("Logged out!")
-})
+// app.post("/refreshToken", (req, res) => {
+//   const refreshTokenResponse = Auth.refreshToken(req)
+//   res.json(refreshTokenResponse)
+// })
 
 app.get("/posts", validateJwtToken, (req, res) => {
   console.log("Token is valid")
-  console.log(req.user.user)
-  res.send(`${req.user.user} successfully accessed post`)
+  console.log(req.user)
+  res.send(`${req.user} successfully accessed post`)
 })
 // AUTHENTICATION STUFF ------------------------------------------- END
 
