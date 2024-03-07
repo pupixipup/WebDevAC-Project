@@ -1,3 +1,10 @@
+
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
+import Navbar from "./components/Navbar"
+import Signup from "./pages/signup"
+import Login from "./pages/login"
+import Hello from "./Hello"
 import { useState, useEffect } from "react"
 import categories from "../generalized_categories.json"
 

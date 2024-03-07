@@ -5,6 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { AuthContextProvider } from "./context/authContext.jsx"
 import "./index.css"
 import { Location, locationLoader } from "./Location/Location.jsx";
 
@@ -22,6 +23,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <AuthContextProvider>
     <RouterProvider router={router} />
+    </AuthContextProvider>
   </React.StrictMode>
 )
