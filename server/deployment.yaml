@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-deployment
+  namespace: web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+template:
+  metadata:
+    labels:
+      app: webp-app
+spec:
+  containers:
+  - name: web-app
+    image: localhost:5000/web-app:latest

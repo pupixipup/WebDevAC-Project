@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  web-app:
+    image: web-app
+    environment:
+      MONGO_URL: ${MONGO_URL}
+    ports:
+      - 3000:3000

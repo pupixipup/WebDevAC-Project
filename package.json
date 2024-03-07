@@ -1,0 +1,15 @@
+{
+  "name": "webdevac-project",
+  "version": "1.0.0",
+  "description": "- `cd client` `npm run dev`",
+  "main": "runBoth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm start --prefix client\" \"npm start --prefix server\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
