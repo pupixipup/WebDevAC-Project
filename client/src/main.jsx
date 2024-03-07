@@ -24,7 +24,7 @@ const Layout = ({children}) => (
 const router = createBrowserRouter([
   {
     loader: locationLoader,
-    path: "/:locationId",
+    path: "/locations/:locationId",
     element: <Layout><Location /></Layout>,
   },
   {
