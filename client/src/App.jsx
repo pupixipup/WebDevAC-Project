@@ -49,6 +49,7 @@ function App() {
       return from + PAGE_LIMIT
     })
   } catch (err) {
+    console.log(err)
     setError(err);
   } finally {
   setLoading(false)
@@ -105,9 +106,7 @@ function App() {
         </div>
         <div className="container">
           {locations.map((el) => (
-            <a href={"/" + el._id}>
             <LocationCard key={el._id} location={el} />
-            </a>
           ))}
         </div>
       </div>
