@@ -1,29 +1,28 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
+const { authenticate } = require("./middleware/authenticate")
+var cookieParser = require('cookie-parser')
 require("dotenv").config()
 
 const port = 3000
-const connection = mongoose.connect(process.env.MONGO_URL)
-const { validateJwtToken } = require("./middleware/validateJwtToken")
+mongoose.connect(process.env.MONGO_URL)
 
 const AuthClass = require("./auth")
 const Auth = new AuthClass()
 
+app.use(cookieParser())
 app.use(express.json())
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   )
   next()
 })
 
-app.get("/", (req, res) => {
-  res.json({ hello: "world" })
-})
 
 // AUTHENTICATION STUFF ------------------------------------------- START
 app.post("/createUser", async (req, res) => {
@@ -39,20 +38,14 @@ app.get("/getUsers", async (req, res) => {
   Auth.getUsers(req, res)
 })
 
-// app.post("/refreshToken", (req, res) => {
-//   const refreshTokenResponse = Auth.refreshToken(req)
-//   res.json(refreshTokenResponse)
-// })
+app.get("/greet", authenticate, async (req, res) => {
+  res.json({hello: "world"})
+})
 
-app.get("/posts", validateJwtToken, (req, res) => {
-  console.log("Token is valid")
-  console.log(req.user)
-  res.send(`${req.user} successfully accessed post`)
+app.get("/posts", authenticate, (req, res) => {
+  res.send(`${req.user.email} successfully accessed post`)
 })
 // AUTHENTICATION STUFF ------------------------------------------- END
-
-console.log("env:", process.env.MONGO_URL)
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

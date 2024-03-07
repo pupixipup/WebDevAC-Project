@@ -5,7 +5,7 @@ export const AuthContext = createContext()
 export const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      return { user: action.payload }
+      return action.payload
     case "LOGOUT":
       return { user: null }
     default:
@@ -27,7 +27,6 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, [])
 
-  console.log("AuthContext state: ", state) // to be removed
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

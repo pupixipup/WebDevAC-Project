@@ -1,16 +1,12 @@
-import { useEffect } from "react"
+
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Navbar from "./components/Navbar"
 import Signup from "./pages/signup"
 import Login from "./pages/login"
+import Hello from "./Hello"
 
 function App() {
-  useEffect(() => {
-    fetch("http://localhost:3000/")
-      .then((res) => res.json())
-      .then((json) => console.log(json))
-  }, [])
   return (
     <div className="App">
       <BrowserRouter>
@@ -19,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/hello" element={<Hello />} /> 
           </Routes>
         </div>
       </BrowserRouter>

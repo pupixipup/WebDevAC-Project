@@ -9,7 +9,8 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await signup(email, password)
+    const res = await signup(email, password)
+    console.log(res)
   }
 
   return (
@@ -22,8 +23,8 @@ const Signup = () => {
         onChange={(e) => setEmail(e.target.value)}
         value={email}
       />
-
       <label>Password:</label>
+      <h5>At least 8 chars</h5>
       <input
         type="password"
         onChange={(e) => setPassword(e.target.value)}
