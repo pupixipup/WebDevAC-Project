@@ -1,5 +1,4 @@
-import { useEffect } from "react"
-import { AuthContext, authReducer } from "./context/authContext";
+import { AuthContext } from "./context/authContext";
 import { useContext } from "react";
 
 const Hello = () => { 
