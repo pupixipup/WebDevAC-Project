@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <h2>Navbar</h2>
+      <h2>{user?.name ? <Link>{user?.name}</Link>  : "Navbar"}</h2>
 
       <nav>
         {user && (

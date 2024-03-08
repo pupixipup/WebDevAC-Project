@@ -13,10 +13,8 @@ function generateRefreshToken(user) {
 
 class AuthClass {
   async createUser(req, res) {
-    const { email, password } = req.body
-
     try {
-      let user = await User.signup(email, password);
+      let user = await User.signup(req.body);
       const token = generateAccessToken(user)
 
       res.status(200).json({user, token})

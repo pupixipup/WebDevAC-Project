@@ -13,6 +13,7 @@ import { Location, locationLoader } from "./Location/Location.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
 import Navbar from "./components/Navbar.jsx";
+import { Profile } from "./pages/profile.jsx";
 
 const Layout = ({children}) => (
   <>
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
   },
   { path: "/signup",
     element: <Layout><Signup /></Layout>,
-}
+  },
+  {
+    path: "/profile",
+    element: <Layout><Profile /></Layout>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

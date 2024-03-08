@@ -8,7 +8,7 @@ export const useSignup = () => {
   const { dispatch } = useAuthContext()
   const navigate = useNavigate();
 
-  const signup = async (email, password) => {
+  const signup = async (email, password, name) => {
     setIsLoading(true)
     setError(null)
 
@@ -16,7 +16,7 @@ export const useSignup = () => {
     const response = await fetch("http://localhost:3000/createUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, name }),
     })
     const responseJson = await response.json()
 
