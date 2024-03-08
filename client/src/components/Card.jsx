@@ -3,7 +3,6 @@ import { normalizeLink } from "../shared/helpers";
 import { Link } from "react-router-dom";
 
 export const LocationCard = ({ location }) => {
-  console.log(location)
   const { address, category, image, name, url } = location;
   return <div className={styles.card}>
    <img className={styles.image} src={image} />

@@ -31,9 +31,9 @@ class AuthClass {
       let user = await User.login(email, password);
       const token = generateAccessToken(user)
       const refreshToken = generateRefreshToken(user)
-      res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
+      res.cookie('refreshToken', refreshToken)
       .header('Authorization', token)
-      .status(200).json({user, token})
+      .status(200).json({user, token, refreshToken})
     } catch (error) {
       res.status(400).json({ error: error.message })
     }

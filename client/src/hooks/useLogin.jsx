@@ -13,7 +13,8 @@ export const useLogin = () => {
     // Change endpoint
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json"},
+      credentials: "include",
       body: JSON.stringify({ email, password }),
     })
     const responseJson = await response.json()

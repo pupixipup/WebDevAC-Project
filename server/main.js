@@ -2,8 +2,8 @@ const express = require("express")
 const mongoose = require("mongoose")
 const Location = require("./model/Location")
 const categories = require("./generalized_categories.json")
+const cors = require('cors')
 const app = express()
-//
 const { authenticate } = require("./middleware/authenticate")
 var cookieParser = require('cookie-parser')
 require("dotenv").config()
@@ -14,22 +14,20 @@ mongoose.connect(process.env.MONGO_URL)
 const AuthClass = require("./auth")
 const Auth = new AuthClass()
 
-app.use(cookieParser())
-app.use(express.json())
 
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("Successful DB connection"))
   .catch((err) => console.log(`Connection failed ${err}`))
-//
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  )
-  next()
-})
+
+app.use(cors({
+  origin: true,
+  credentials: true,
+  sameSite: 'none',
+  
+}));
+app.use(cookieParser())
+app.use(express.json())
 
 
 // AUTHENTICATION STUFF ------------------------------------------- START
@@ -41,10 +39,6 @@ app.post("/login", async (req, res) => {
   Auth.login(req, res)
 })
 app.use(express.static("public"))
-
-app.get("/", (req, res) => {
-  res.json({ hello: "world" })
-})
 
 app.get("/locations", async (req, res) => {
   try {
@@ -75,8 +69,6 @@ app.get("/locations/:id", async (req, res) => {
     console.log(err)
   }
 });
-
-console.log("env:", process.env.MONGO_URL)
 // remove after testing
 app.get("/getUsers", async (req, res) => {
   Auth.getUsers(req, res)

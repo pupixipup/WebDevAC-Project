@@ -22,10 +22,9 @@ exports.authenticate = function authenticate (req, res, next) {
     try {
       const decoded = jwt.verify(refreshToken, process.env.ACCESS_TOKEN_SECRET);
       const accessToken = jwt.sign({ user: decoded.user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-      res
-        .cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
+      res.cookie('refreshToken', refreshToken)
         .header('Authorization', accessToken)
-        .send(decoded.user);
+        .json({user: decoded.user});
     } catch (error) {
       console.log("error")
       return res.status(400).send('Invalid Token.');

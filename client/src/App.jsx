@@ -1,10 +1,5 @@
-
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-
-import Navbar from "./components/Navbar"
-import Signup from "./pages/signup"
-import Login from "./pages/login"
-import Hello from "./Hello"
+import { useContext } from "react"
+import { AuthContext } from "./context/authContext"
 import { useState, useEffect } from "react"
 import categories from "../generalized_categories.json"
 
@@ -15,6 +10,8 @@ import { Category } from "./components/Category"
 const PAGE_LIMIT = 10
 const SORT_OPTIONS = ["asc", "desc"]
 function App() {
+  const data  = useContext(AuthContext)
+  const { token } = data;
   const [locations, setLocations] = useState([])
   const [from, setFrom] = useState(0)
   const [count, setCount] = useState(0)
@@ -32,7 +29,15 @@ function App() {
       url.searchParams.append("category", category)
     }
     try {
-    const request = await fetch(url)
+    const request = await fetch(url, {
+      credentials: 'include',
+      headers: {
+        Authorization: token
+      }
+    })
+    if (request.status !== 200) {
+      throw new Error("status code " + request.status)
+    }
     const json = await request.json()
     const { locations: locs, count } = json
     setCount(count)
@@ -57,9 +62,8 @@ function App() {
   }
 
   useEffect(() => {
-    fetchData()
-  }, [category, sort])
-
+      fetchData()
+  }, [category, sort, data])
   if (error) {
 
     return <div>
