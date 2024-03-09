@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const User = require("./models/userModel")
+const User = require("./model/userModel")
 require("dotenv").config()
 
 function generateAccessToken(user) {
@@ -30,8 +30,8 @@ class AuthClass {
       const token = generateAccessToken(user)
       const refreshToken = generateRefreshToken(user)
       res.cookie('refreshToken', refreshToken)
-      .header('Authorization', token)
-      .status(200).json({user, token, refreshToken})
+      res.cookie('accessToken', token)
+      .status(200).json({user})
     } catch (error) {
       res.status(400).json({ error: error.message })
     }

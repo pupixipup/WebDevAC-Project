@@ -3,9 +3,9 @@ import { AuthContext } from "./context/authContext"
 import { useState, useEffect } from "react"
 import categories from "../generalized_categories.json"
 
-import { LocationCard } from "./components/Card"
+import { Card } from "./components"
 import "./index.css"
-import { Category } from "./components/Category"
+import { Category } from "./components"
 
 const PAGE_LIMIT = 10
 const SORT_OPTIONS = ["asc", "desc"]
@@ -110,7 +110,7 @@ function App() {
         </div>
         <div className="container">
           {locations.map((el) => (
-            <LocationCard key={el._id} location={el} />
+            <Card key={el._id} location={el} />
           ))}
         </div>
       </div>

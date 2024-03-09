@@ -1,8 +1,8 @@
 import styles from "./Card.module.css"
-import { normalizeLink } from "../shared/helpers";
+import { normalizeLink } from "../../shared/helpers";
 import { Link } from "react-router-dom";
 
-export const LocationCard = ({ location }) => {
+export const Card = ({ location }) => {
   const { address, category, image, name, url } = location;
   return <div className={styles.card}>
    <img className={styles.image} src={image} />

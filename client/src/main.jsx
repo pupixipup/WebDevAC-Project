@@ -12,7 +12,7 @@ import "./index.css"
 import { Location, locationLoader } from "./Location/Location.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
-import Navbar from "./components/Navbar.jsx";
+import { Navbar } from "./components";
 import { Profile } from "./pages/profile.jsx";
 
 const Layout = ({children}) => (
@@ -41,6 +41,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
+    element: <Layout><Profile /></Layout>
+  },
+  {
+    path: "/profile/:username",
     element: <Layout><Profile /></Layout>
   }
 ]);

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useLogout } from "../hooks/useLogout"
 import { useAuthContext } from "../hooks/useAuthHooks"
 
-const Navbar = () => {
+export const Navbar = () => {
   const { logout } = useLogout()
   const { user } = useAuthContext()
 
@@ -12,12 +12,11 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <h2>{user?.name ? <Link>{user?.name}</Link>  : "Navbar"}</h2>
-
+      <h2>{<Link to="/">JKPG</Link>}</h2>
       <nav>
         {user && (
           <div>
-            <span className="user-email">{user.email}</span>
+            <span>{user?.name ? <Link to={`/profile/${user?.name}`}>{user?.name}</Link>  : "Navbar"}</span>
             <button onClick={handleLogOut}>Log out</button>
           </div>
         )}
@@ -31,5 +30,3 @@ const Navbar = () => {
     </header>
   )
 }
-
-export default Navbar

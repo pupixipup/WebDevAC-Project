@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const Location = require("./model/Location")
+const Review = require("./model/Review")
+const User = require("./model/userModel")
 const categories = require("./generalized_categories.json")
 const cors = require('cors')
 const app = express()
@@ -70,8 +72,50 @@ app.get("/locations/:id", async (req, res) => {
   }
 });
 // remove after testing
-app.get("/getUsers", async (req, res) => {
+app.get("/users", async (req, res) => {
   Auth.getUsers(req, res)
+})
+
+app.post("/review", authenticate, async (req, res) => {
+  try {
+    const { description, locationId, score, reviewerId } = req.body
+    const newReview = new Review({ description, reviewerId, locationId, score });
+    await newReview.save();
+    res.status(200).send("Review created")
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+})
+
+app.get("/reviews", async (req,res) => {
+  try {
+    const { reviewerId, locationId } = req.query;
+    const query = {};
+    if (reviewerId) query.reviewerId = reviewerId;
+    if (locationId) query.locationId = locationId;
+    const reviews = await Review.find(query)
+    res.status(200).json(reviews)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+})
+
+app.get("/users/:username", async (req, res) => {
+  try {
+    const { username } = req.params
+    const isId = mongoose.isValidObjectId(username)
+    let user;
+    if (isId) {
+      user = await User.findById(username)
+    } else {
+      user = await User.findOne({name: username})
+    }
+    res.json(user)
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 app.get("/greet", authenticate, async (req, res) => {
