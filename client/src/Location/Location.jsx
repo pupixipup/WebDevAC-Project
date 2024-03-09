@@ -25,7 +25,7 @@ export const Location = (props) => {
   const data  = useContext(AuthContext)
   const { user } = data;
   const location = useLoaderData();
-  const [reviews, error] = useFetch({
+  const [reviews, error, invalidate] = useFetch({
     url: "/reviews",
     parameters: {
       locationId: params.locationId
@@ -48,6 +48,7 @@ export const Location = (props) => {
     .then(() => {
       setDescription("")
       setRating(0)
+      invalidate()
     })
 
 }

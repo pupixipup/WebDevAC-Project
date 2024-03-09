@@ -34,5 +34,7 @@ export const useFetch = ({ url, options, isAuth, callback, parameters }) => {
   useEffect(() => {
     retreive()
   }, [])
-  return [data, error]
+
+  const invalidate = () => retreive()
+  return [data, error, invalidate]
 }

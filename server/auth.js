@@ -7,7 +7,7 @@ function generateAccessToken(user) {
 }
 
 function generateRefreshToken(user) {
-  const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "2h" })
+  const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "2d" })
   return token;
 }
 
@@ -40,9 +40,10 @@ class AuthClass {
   // Test function
   async getUsers(req, res) {
     const allUsers = await User.find({})
-
     res.status(200).json(allUsers)
   }
 }
 
-module.exports = AuthClass
+module.exports.AuthClass = AuthClass
+module.exports.generateAccessToken = generateAccessToken
+module.exports.generateRefreshToken = generateRefreshToken
