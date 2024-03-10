@@ -5,7 +5,10 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "docker build -t web-app . && docker compose up -d"
+    "start": "docker build -t web-app . && docker compose up -d",
+    "docker:build": "docker build -t web-app . && docker tag web-app:latest localhost:5000/web-app:latest && docker push localhost:5000/web-app:latest",
+    "kubernetes": "kubectl apply -f k8s/namespace.yaml && kubectl apply -f k8s/deployment.yaml && kubectl apply -f k8s/service.yaml && kubectl rollout restart deployment/web-app-deployment -n web-app",
+    "k8s:start": "kubectl port-forward svc/web-app-service 3000:3000 -n web-app"
   },
   "author": "",
   "license": "ISC",
