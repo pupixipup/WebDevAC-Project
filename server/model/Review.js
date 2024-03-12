@@ -21,6 +21,8 @@ const reviewSchema = new mongoose.Schema({
       minLength: [15, 'Description is too short'],
       maxLength: [200, 'Description is too long']
     }
+}, {
+  timestamps: true
 })
 
 const Review = mongoose.model("Review", reviewSchema)
