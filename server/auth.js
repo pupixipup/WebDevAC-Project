@@ -16,8 +16,10 @@ class AuthClass {
     try {
       let user = await User.signup(req.body);
       const token = generateAccessToken(user)
-
-      res.status(200).json({user, token})
+      const refreshToken = generateRefreshToken(user)
+      res.cookie('refreshToken', refreshToken)
+      res.cookie('accessToken', token)
+      res.status(200).json({user})
     } catch (error) {
       res.status(400).json({ error: error.message })
     }
