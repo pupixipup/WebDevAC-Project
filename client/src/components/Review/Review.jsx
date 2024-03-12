@@ -2,7 +2,6 @@ import { useFetch } from "../../hooks/useFetch"
 
 export const Review = ({ review }) => {
     const { score, description, createdAt, reviewerId } = review;
-    console.log(review)
     const date = new Date(createdAt).toDateString()
     const [user, err] = useFetch({url: "/users/" + reviewerId})
     if (!user || !review) return null;

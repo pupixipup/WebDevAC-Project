@@ -1,7 +1,7 @@
 import { useAuthContext } from "./useAuthHooks";
 import { useState, useEffect  } from "react";
 
-export const useFetch = ({ url, options, isAuth, callback, parameters }) => {
+export const useFetch = ({ url, options, isAuth, callback, parameters, deps }) => {
   const { token } = useAuthContext();
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
@@ -12,9 +12,11 @@ export const useFetch = ({ url, options, isAuth, callback, parameters }) => {
       Authorization: token
     }, ...options }
   }
+  let retreive = () => null;
+  if (url) {
   const fetchUrl = url.startsWith("/") ? import.meta.env.VITE_BASE_URL + url : url;
   const params = typeof parameters === "object" ? "?" + (new URLSearchParams(parameters)).toString() : "";
-  const retreive = async () => {
+   retreive = async () => {
     try {
       const response = await fetch(fetchUrl + params, options)
       const contentType = response.headers.get("content-type");
@@ -31,9 +33,10 @@ export const useFetch = ({ url, options, isAuth, callback, parameters }) => {
       setError(err)
     }
   }
+}
   useEffect(() => {
     retreive()
-  }, [])
+  }, [deps])
 
   const invalidate = () => retreive()
   return [data, error, invalidate]
