@@ -11,7 +11,6 @@ const PAGE_LIMIT = 10
 const SORT_OPTIONS = ["asc", "desc"]
 function App() {
   const data  = useContext(AuthContext)
-  const { token } = data;
   const [locations, setLocations] = useState([])
   const [from, setFrom] = useState(0)
   const [count, setCount] = useState(0)
@@ -29,12 +28,7 @@ function App() {
       url.searchParams.append("category", category)
     }
     try {
-    const request = await fetch(url, {
-      credentials: 'include',
-      headers: {
-        Authorization: token
-      }
-    })
+    const request = await fetch(url)
     if (request.status !== 200) {
       throw new Error("status code " + request.status)
     }
