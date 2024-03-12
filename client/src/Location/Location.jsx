@@ -68,13 +68,10 @@ export const Location = (props) => {
       </button>
     </div>
       </div>
-      <div className="flex gap-1">
+      <div className="pb-3 overflow-x-auto flex gap-1 max-w-screen-md">
         {Array.isArray(reviews) && reviews.map((review) => <Review key={review._id} review={review} />)}
       </div>
       {user ? <form className="mb-3 flex flex-col items-start gap-3" onSubmit={submit}>
-        <h2>
-          Create review
-          </h2>
        <div className="flex flex-col gap-1">
         Rating
         <input value={rating} onChange={(event) => setRating(event.target.value)} type="number" min={0} max={5} />
