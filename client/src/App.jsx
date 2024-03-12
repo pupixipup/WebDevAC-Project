@@ -67,19 +67,19 @@ function App() {
   if (error) {
 
     return <div>
-      <h1 style={{textAlign: "center"}}>Error: {error.message}</h1>
-      <button style={{ margin: "0 auto", display: 'flex'}} onClick={() => window.location.reload()}>Reload</button>
+      <h1 className="text-center">Error: {error.message}</h1>
+      <button className="flex my-0 mx-auto" onClick={() => window.location.reload()}>Reload</button>
       </div>
   }
 
   if (loading) {
-    return <h1 style={{textAlign: "center"}}>LOADING</h1>
+    return <h1 className="text-center">LOADING</h1>
   }
 
   return (
     <div>
       <div>
-        <div className="categories">
+        <div className="m-1 ml-0 p-1 flex gap-1 overflow-x-auto">
           {Object.keys(categories).map((cat) => (
             <Category
               onClick={() => {
@@ -94,7 +94,7 @@ function App() {
             </Category>
           ))}
         </div>
-        <div className="categories">
+        <div className="m-1 ml-0 p-1 flex gap-1 overflow-x-auto">
           {SORT_OPTIONS.map((option) => (
             <Category
               onClick={() => {
@@ -108,14 +108,14 @@ function App() {
             </Category>
           ))}
         </div>
-        <div className="container">
+        <div className="grid justify-items-center gap-5 locations_grid p-1">
           {locations.map((el) => (
             <Card key={el._id} location={el} />
           ))}
         </div>
       </div>
       {from < count && (
-        <button className="more_button" onClick={fetchData}>
+        <button className="text-center mx-auto my-2 items-center flex justify-center" onClick={fetchData}>
           More
         </button>
       )}

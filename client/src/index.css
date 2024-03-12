@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -102,32 +106,13 @@ nav * {
   }
 }
 
-.container {
-  display: grid;
-  justify-items: center;
+.locations_grid {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-  padding: 20px;
 }
 
 @media (max-width: 600px) {
-  .container {
+  .locations_grid {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   }
 }
 
-.more_button {
-  text-align: center;
-  margin: 10px auto;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-.categories {
-  /* margin: 8px 0px 8px 8px; */
-  padding: 8px;
-  display: flex;
-  gap: 5px;
-  overflow-x: auto;
-}
