@@ -12,18 +12,34 @@ export const Navbar = () => {
 
   return (
     <header className="navbar">
-      <h2>{<Link to="/">JKPG</Link>}</h2>
+      <h1>
+        {
+          <Link to="/">
+            JKPG<span className="thin">city</span>
+          </Link>
+        }
+      </h1>
       <nav>
         {user && (
           <div>
-            <span>{user?.name ? <Link to={`/profile/${user?.name}`}>{user?.name}</Link>  : "Navbar"}</span>
+            <span>
+              {user?.name ? (
+                <Link to={`/profile/${user?.name}`}>{user?.name}</Link>
+              ) : (
+                "Navbar"
+              )}
+            </span>
             <button onClick={handleLogOut}>Log out</button>
           </div>
         )}
         {!user && (
           <div>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            <Link className="nav-option" to="/login">
+              Login
+            </Link>
+            <Link className="nav-option" to="/signup">
+              Signup
+            </Link>
           </div>
         )}
       </nav>

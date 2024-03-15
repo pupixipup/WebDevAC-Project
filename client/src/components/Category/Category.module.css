@@ -1,7 +1,15 @@
 .category {
   padding: 5px 10px;
-  background: rgba(188, 202, 235, 0.2);
+  background: var(--button-bg-color);
   text-wrap: nowrap;
+  color: var(--main-dark-color);
+}
+
+.selectedCategory {
+  /* outline: 2px solid ; */
+  font-weight: 300;
+  background-color: var(--main-dark-color);
+  color: var(--main-bg-color);
 }
 
 @media (max-width: 900px) {

@@ -4,33 +4,32 @@ const Location = require("./model/Location")
 const Review = require("./model/Review")
 const User = require("./model/userModel")
 const categories = require("./generalized_categories.json")
-const cors = require('cors')
+const cors = require("cors")
 const app = express()
 const { authenticate } = require("./middleware/authenticate")
-var cookieParser = require('cookie-parser')
+var cookieParser = require("cookie-parser")
 require("dotenv").config()
 
-const port = 3000
+const port = 3001
 mongoose.connect(process.env.MONGO_URL)
 
 const { AuthClass } = require("./auth")
 const Auth = new AuthClass()
-
 
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("Successful DB connection"))
   .catch((err) => console.log(`Connection failed ${err}`))
 
-app.use(cors({
-  origin: true,
-  credentials: true,
-  sameSite: 'none',
-  
-}));
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    sameSite: "none",
+  })
+)
 app.use(cookieParser())
 app.use(express.json())
-
 
 // AUTHENTICATION STUFF ------------------------------------------- START
 app.post("/createUser", async (req, res) => {
@@ -44,7 +43,7 @@ app.use(express.static("public"))
 
 app.get("/locations", async (req, res) => {
   try {
-    const from = parseInt(req.query.from) || 0;
+    const from = parseInt(req.query.from) || 0
     const sort = req.query.sort
     let category = req.query.category
     let query = {}
@@ -70,7 +69,7 @@ app.get("/locations/:id", async (req, res) => {
   } catch (err) {
     console.log(err)
   }
-});
+})
 // remove after testing
 app.get("/users", async (req, res) => {
   Auth.getUsers(req, res)
@@ -79,8 +78,8 @@ app.get("/users", async (req, res) => {
 app.post("/review", authenticate, async (req, res) => {
   try {
     const { description, locationId, score, reviewerId } = req.body
-    const newReview = new Review({ description, reviewerId, locationId, score });
-    await newReview.save();
+    const newReview = new Review({ description, reviewerId, locationId, score })
+    await newReview.save()
     res.status(200).send("Review created")
   } catch (err) {
     console.log(err)
@@ -88,12 +87,12 @@ app.post("/review", authenticate, async (req, res) => {
   }
 })
 
-app.get("/reviews", async (req,res) => {
+app.get("/reviews", async (req, res) => {
   try {
-    const { reviewerId, locationId } = req.query;
-    const query = {};
-    if (reviewerId) query.reviewerId = reviewerId;
-    if (locationId) query.locationId = locationId;
+    const { reviewerId, locationId } = req.query
+    const query = {}
+    if (reviewerId) query.reviewerId = reviewerId
+    if (locationId) query.locationId = locationId
     const reviews = await Review.find(query)
     res.status(200).json(reviews)
   } catch (err) {
@@ -106,11 +105,11 @@ app.get("/users/:username", async (req, res) => {
   try {
     const { username } = req.params
     const isId = mongoose.isValidObjectId(username)
-    let user;
+    let user
     if (isId) {
       user = await User.findById(username)
     } else {
-      user = await User.findOne({name: username})
+      user = await User.findOne({ name: username })
     }
     res.json(user)
   } catch (err) {
@@ -119,7 +118,7 @@ app.get("/users/:username", async (req, res) => {
 })
 
 app.get("/greet", authenticate, async (req, res) => {
-  res.json({hello: "world"})
+  res.json({ hello: "world" })
 })
 
 app.get("/posts", authenticate, (req, res) => {

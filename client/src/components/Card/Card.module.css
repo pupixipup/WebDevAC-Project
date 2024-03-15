@@ -1,19 +1,65 @@
 .image {
   width: 100%;
   object-fit: cover;
-  height: 150px;
+  height: 226px;
 }
 
 .card {
-  width: 250px;
+  width: 316px;
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.342) 0 0 18px;
   overflow: hidden;
-  background: rgba(188, 202, 235, 0.2);
+  background: var(--card-bg-color);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease;
+  color: var(--main-dark-color);
+}
+
+.card:hover {
+  scale: 1.05;
+  box-shadow: rgba(0, 0, 0, 0.541) 0 0 18px;
 }
 
 .body {
-  padding: 10px;
+  padding: 20px 30px 10px 30px;
+  /* height: 130px; */
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+p {
+  left: 30px;
+  top: 190px;
+  position: absolute;
+  font-size: 1.2em;
+  color: white;
+  text-shadow: black 0px 0 10px;
+}
+
+.body h5 {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.2;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.body address {
+  margin-top: 5px;
+  font-size: 1em;
+}
+
+.links {
+  margin-top: 10px;
+  /* align-self: flex-end; */
+  display: flex;
+  text-decoration: underline;
+  justify-content: flex-end;
+  gap: 20px;
 }
 
 .link {
