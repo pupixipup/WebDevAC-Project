@@ -13,10 +13,10 @@ export const useFetch = ({ url, options, isAuth, callback, parameters, deps }) =
     }, ...options }
   }
   let retreive = () => null;
+  const params = typeof parameters === "object" && parameters !== null ? "?" + (new URLSearchParams(parameters)).toString() : "";
   if (url) {
   const fetchUrl = url.startsWith("/") ? import.meta.env.VITE_BASE_URL + url : url;
-  const params = typeof parameters === "object" ? "?" + (new URLSearchParams(parameters)).toString() : "";
-   retreive = async () => {
+  retreive = async () => {
     try {
       const response = await fetch(fetchUrl + params, options)
       const contentType = response.headers.get("content-type");

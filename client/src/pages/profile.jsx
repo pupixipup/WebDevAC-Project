@@ -13,9 +13,9 @@ export const Profile = () => {
 
   const [reviews] = useFetch({
     url: `/reviews/`,
-    parameters: {
-      reviewerId: user?._id,
-    },
+    parameters: user ? {
+      reviewerId: user._id,
+    } : null,
     deps: user,
   })
   return (

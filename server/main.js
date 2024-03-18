@@ -45,13 +45,19 @@ app.get("/locations", async (req, res) => {
   try {
     const from = parseInt(req.query.from) || 0
     const sort = req.query.sort
+    /* Filter */
     let category = req.query.category
     let query = {}
     if (category && categories[category]) {
       query.category = { $in: categories[category] }
     }
+    /* Sort */
+    let sortParams = {};
+    if (sort) {
+      sortParams.name = sort;
+    }
     const locations = await Location.find(query)
-      .sort({ name: sort })
+      .sort(sortParams)
       .skip(from)
       .limit(10)
     const count = await Location.countDocuments(query)
