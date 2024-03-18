@@ -15,13 +15,14 @@ export const Navbar = () => {
       <h1>
         {
           <Link to="/">
-            JKPG<span className="thin">city</span>
+            <span className="jkpgcityLogo">JKPG</span>
+            <span className="thin">city</span>
           </Link>
         }
       </h1>
       <nav>
         {user && (
-          <div>
+          <div className="user-container">
             <span>
               {user?.name ? (
                 <Link to={`/profile/${user?.name}`}>{user?.name}</Link>
@@ -29,7 +30,7 @@ export const Navbar = () => {
                 "Navbar"
               )}
             </span>
-            <button onClick={handleLogOut}>Log out</button>
+            <a onClick={handleLogOut}>Log out</a>
           </div>
         )}
         {!user && (

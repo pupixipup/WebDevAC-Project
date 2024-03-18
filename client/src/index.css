@@ -66,12 +66,22 @@ button:focus-visible {
 }
 
 .navbar {
+  position: absolute;
+  top: 0;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--main-bg-color);
+  /* background-color: var(--main-bg-color); */
   font-family: "Poppins", sans-serif;
-  color: var(--main-dark-color);
+  color: var(--main-bg-color);
+}
+.navbar a {
+  font-weight: 400;
+  margin-right: 20px;
+}
+.jkpgcityLogo {
+  font-weight: bold;
 }
 nav {
   display: flex;
@@ -80,6 +90,7 @@ nav {
 }
 nav * {
   margin-left: 20px;
+  color: var(--main-dark-color);
 }
 .thin {
   font-weight: 200;
@@ -137,6 +148,14 @@ input {
   /* width: 170px; */
   font-size: 1.2em;
 }
+.user-container {
+  display: flex;
+  align-items: center;
+}
+.user-container button {
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -160,5 +179,14 @@ input {
 @media (max-width: 600px) {
   .locations_grid {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+  .navbar button {
+    scale: 0.8;
+  }
+  .navbar h1 {
+    font-size: 1.4em;
+  }
+  .navbar a {
+    font-size: 0.9em;
   }
 }

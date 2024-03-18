@@ -1,0 +1,47 @@
+.review {
+  margin: 10px;
+  margin-right: 30px;
+  background-color: var(--main-bg-color);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 15px;
+  border-radius: 10px;
+  padding: 15px 20px 10px 20px;
+  min-width: 280px;
+  max-width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.reviewHead {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.review h4 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+.score {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+.reveiwDescription {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+.reviewDate {
+  font-size: 0.9em;
+  text-align: right;
+}

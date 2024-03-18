@@ -9,7 +9,7 @@ import "./index.css"
 import { Category } from "./components"
 
 const PAGE_LIMIT = 10
-const SORT_OPTIONS = ["ascending", "descending"]
+const SORT_OPTIONS = ["Ascending", "Descending"]
 function App() {
   const data = useContext(AuthContext)
   const [locations, setLocations] = useState([])
@@ -62,7 +62,9 @@ function App() {
   if (error) {
     return (
       <div>
-        <h1 className="text-center">Error: {error.message}</h1>
+        <h1 className="text-center mt-12 mb-6 text-xl">
+          Error: {error.message}
+        </h1>
         <button
           className="flex my-0 mx-auto"
           onClick={() => window.location.reload()}
@@ -74,7 +76,7 @@ function App() {
   }
 
   if (loading) {
-    return <h1 className="text-center">LOADING</h1>
+    return <h1 className="text-center mt-12">LOADING</h1>
   }
 
   return (
@@ -83,12 +85,12 @@ function App() {
       <div>
         <div className=" m-auto locations-container">
           <hr className="ml-5 mr-5" />
-          <h3 className="mt-[-15px] ml-7 font-bold text-lg">
-            <span className="bg-[var(--main-bg-color)] pl-3 pr-3">
+          <h3 className="mt-[-25px] ml-7 font-bold text-lg">
+            <span className="bg-[var(--main-bg-color)] text-[var(--main-dark-color)] pl-3 pr-3">
               Sort by:{" "}
             </span>
           </h3>
-          <div className="m-1 ml-7 mb-12 p-1 flex gap-1 flex-wrap">
+          <div className="m-1 ml-3 mr-3 mb-12 p-1 flex gap-1 flex-wrap justify-center">
             {Object.keys(categories).map((cat) => (
               <Category
                 category={category}
@@ -106,12 +108,12 @@ function App() {
           </div>
           {/* <hr className="m-5 mb-10" /> */}
           <hr className="ml-5 mr-5" />
-          <h3 className="mt-[-15px] ml-7 font-bold text-lg">
-            <span className="bg-[var(--main-bg-color)] pl-3 pr-3">
+          <h3 className="mt-[-25px] ml-7 font-bold text-lg">
+            <span className="bg-[var(--main-bg-color)] pl-3 pr-3 text-[var(--main-dark-color)]">
               Alphabetical order:{" "}
             </span>
           </h3>
-          <div className="m-1 ml-7 mb-12 p-1 flex gap-1 overflow-x-auto">
+          <div className="m-1 ml-3 mr-3 mb-12 p-1 flex gap-1 overflow-x-auto justify-center">
             {SORT_OPTIONS.map((option) => (
               <Category
                 onClick={() => {

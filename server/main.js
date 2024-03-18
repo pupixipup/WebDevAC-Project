@@ -10,7 +10,7 @@ const { authenticate } = require("./middleware/authenticate")
 var cookieParser = require("cookie-parser")
 require("dotenv").config()
 
-const port = 3001
+const port = 3000
 mongoose.connect(process.env.MONGO_URL)
 
 const { AuthClass } = require("./auth")
