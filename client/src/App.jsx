@@ -127,7 +127,7 @@ function App() {
             ))}
           </div>
 
-          <div className="grid justify-items-center gap-y-20 locations_grid p-1">
+          <div className="grid justify-items-center gap-y-20 locations_grid p-1 pb-6">
             {locations.map((el) => (
               <Card key={el._id} location={el} />
             ))}

@@ -2,6 +2,8 @@
   width: 100%;
   object-fit: cover;
   height: 226px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .card {
@@ -31,13 +33,11 @@
   flex-grow: 1;
 }
 
-.card p {
-  left: 30px;
-  top: 190px;
-  position: absolute;
+.image_title {
   font-size: 1.2em;
   color: white;
   text-shadow: black 0px 0 10px;
+  padding: 8px;
 }
 
 .body h5 {
