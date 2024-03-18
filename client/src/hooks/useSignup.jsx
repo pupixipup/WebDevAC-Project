@@ -16,6 +16,7 @@ export const useSignup = () => {
     const response = await fetch(import.meta.env.VITE_BASE_URL + "/createUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ email, password, name }),
     })
     const responseJson = await response.json()
