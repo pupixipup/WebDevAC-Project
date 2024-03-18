@@ -9,7 +9,7 @@ import "./index.css"
 import { Category } from "./components"
 
 const PAGE_LIMIT = 10
-const SORT_OPTIONS = ["Ascending", "Descending"]
+const SORT_OPTIONS = ["ascending", "descending"]
 function App() {
   const data = useContext(AuthContext)
   const [locations, setLocations] = useState([])
