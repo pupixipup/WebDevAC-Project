@@ -61,7 +61,7 @@ function App() {
   }, [category, sort, data])
 
   useEffect(() => {
-    console.log(locations)
+    // console.log(locations)
   }, [locations])
   if (error) {
     return (

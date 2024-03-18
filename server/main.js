@@ -52,9 +52,9 @@ app.get("/locations", async (req, res) => {
       query.category = { $in: categories[category] }
     }
     /* Sort */
-    let sortParams = {};
+    let sortParams = {}
     if (sort) {
-      sortParams.name = sort;
+      sortParams.name = sort
     }
     const locations = await Location.find(query)
       .sort(sortParams)
@@ -79,6 +79,17 @@ app.get("/locations/:id", async (req, res) => {
 // remove after testing
 app.get("/users", async (req, res) => {
   Auth.getUsers(req, res)
+})
+
+// delete location
+app.delete("/locations/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const location = await Location.findByIdAndDelete(id)
+    res.json(location)
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 app.post("/review", authenticate, async (req, res) => {
