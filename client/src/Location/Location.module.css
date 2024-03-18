@@ -1,0 +1,53 @@
+/* Location.css */
+
+.location_wrapper {
+  margin: 80px auto;
+  max-width: 1000px;
+  padding: 10px;
+}
+
+.map_frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map_wrapper {
+  margin-top: 60px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 450px;
+  padding-top: 75%;
+}
+
+.reviews {
+  display: flex;
+  margin-top: 40px;
+  /* width: 100%; */
+  max-width: 90vw;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-bg-color) var(--button-bg-color);
+}
+
+h3 {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+}
+hr {
+  margin-bottom: 10px;
+}
+
+.review {
+  width: 20px;
+  background-color: aqua;
+}

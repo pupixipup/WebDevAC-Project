@@ -10,15 +10,28 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  role: {
+    type: String,
+    default: 'user',
+    enum: ['user', 'admin'],
+  },
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   password: {
     type: String,
     required: true,
   },
-})
+},
+  { timestamps: true }
+  )
 
 // signup method
-userSchema.statics.signup = async function (email, password) {
-  if (!email || !password) {
+userSchema.statics.signup = async function (user) {
+  const { email, password, name } = user;
+  if (!email || !password || !name) {
     throw Error("All fields must be filled")
   }
   if (!validator.isEmail(email)) {
@@ -42,9 +55,7 @@ userSchema.statics.signup = async function (email, password) {
 
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const user = await this.create({ email, password: hashedPassword })
-
-  return user
+  return (await this.create({ name, email, password: hashedPassword }))
 }
 
 // login method

@@ -8,15 +8,16 @@ export const useSignup = () => {
   const { dispatch } = useAuthContext()
   const navigate = useNavigate();
 
-  const signup = async (email, password) => {
+  const signup = async (email, password, name) => {
     setIsLoading(true)
     setError(null)
 
     // Change endpoint
-    const response = await fetch("http://localhost:3000/createUser", {
+    const response = await fetch(import.meta.env.VITE_BASE_URL + "/createUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      credentials: "include",
+      body: JSON.stringify({ email, password, name }),
     })
     const responseJson = await response.json()
 

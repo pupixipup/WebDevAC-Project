@@ -5,14 +5,19 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "docker build -t web-app . && docker compose up -d"
+    "start": "docker build -t web-app . && docker compose up -d",
+    "docker:build": "docker build -t web-app . && docker tag web-app:latest localhost:5000/web-app:latest && docker push localhost:5000/web-app:latest",
+    "kubernetes": "kubectl apply -f k8s/namespace.yaml && kubectl apply -f k8s/deployment.yaml && kubectl apply -f k8s/service.yaml && kubectl rollout restart deployment/web-app-deployment -n web-app",
+    "k8s:start": "kubectl port-forward svc/web-app-service 3000:3000 -n web-app",
+    "k8s:run": "npm run docker:build && npm run kubernetes && npm run k8s:start"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
-    "axios": "^1.6.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",

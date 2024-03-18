@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const User = require("./models/userModel")
+const User = require("./model/userModel")
 require("dotenv").config()
 
 function generateAccessToken(user) {
@@ -7,19 +7,19 @@ function generateAccessToken(user) {
 }
 
 function generateRefreshToken(user) {
-  const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "2h" })
+  const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "2d" })
   return token;
 }
 
 class AuthClass {
   async createUser(req, res) {
-    const { email, password } = req.body
-
     try {
-      let user = await User.signup(email, password);
+      let user = await User.signup(req.body);
       const token = generateAccessToken(user)
-
-      res.status(200).json({user, token})
+      const refreshToken = generateRefreshToken(user)
+      res.cookie('refreshToken', refreshToken)
+      res.cookie('accessToken', token)
+      res.status(200).json({user})
     } catch (error) {
       res.status(400).json({ error: error.message })
     }
@@ -31,9 +31,9 @@ class AuthClass {
       let user = await User.login(email, password);
       const token = generateAccessToken(user)
       const refreshToken = generateRefreshToken(user)
-      res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
-      .header('Authorization', token)
-      .status(200).json({user, token})
+      res.cookie('refreshToken', refreshToken)
+      res.cookie('accessToken', token)
+      .status(200).json({user})
     } catch (error) {
       res.status(400).json({ error: error.message })
     }
@@ -42,9 +42,10 @@ class AuthClass {
   // Test function
   async getUsers(req, res) {
     const allUsers = await User.find({})
-
     res.status(200).json(allUsers)
   }
 }
 
-module.exports = AuthClass
+module.exports.AuthClass = AuthClass
+module.exports.generateAccessToken = generateAccessToken
+module.exports.generateRefreshToken = generateRefreshToken
