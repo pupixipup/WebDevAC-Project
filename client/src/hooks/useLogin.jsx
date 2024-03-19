@@ -18,7 +18,6 @@ export const useLogin = () => {
       body: JSON.stringify({ email, password }),
     })
     const responseJson = await response.json()
-
     if (!response.ok) {
       setIsLoading(false)
       setError(responseJson.error)
@@ -32,6 +31,7 @@ export const useLogin = () => {
 
       setIsLoading(false)
     }
+    return responseJson.error
   }
 
   return { login, isLoading, error }

@@ -9,6 +9,17 @@ const app = express()
 const { authenticate } = require("./middleware/authenticate")
 var cookieParser = require("cookie-parser")
 require("dotenv").config()
+const multer  = require('multer')
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+var upload = multer({ storage: storage })
+app.use('/uploads', express.static('uploads'));
 
 const port = 3000
 mongoose.connect(process.env.MONGO_URL)
@@ -39,7 +50,12 @@ app.post("/createUser", async (req, res) => {
 app.post("/login", async (req, res) => {
   Auth.login(req, res)
 })
-app.use(express.static("public"))
+
+app.get("/logout", async (req,res) => {
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  res.status(200).send("success")
+})
 
 app.get("/locations", async (req, res) => {
   try {
@@ -67,6 +83,26 @@ app.get("/locations", async (req, res) => {
   }
 })
 
+app.patch("/locations/:id", authenticate, async (req, res) => {
+  try {
+    const { category, name, address } = req.body;
+    const {id } = req.params;
+    if (!category || !name || !address || !id) {
+      res.status(400).send("All fields required")
+      return;
+    }
+    await Location.findByIdAndUpdate(req.params.id, {
+      category,
+      name,
+      address
+    })
+    res.status(200).send("success")
+  } catch (err) {
+    console.log(err)
+    res.status(500).send("unknown error")
+  }
+});
+
 app.get("/locations/:id", async (req, res) => {
   try {
     const { id } = req.params
@@ -76,6 +112,30 @@ app.get("/locations/:id", async (req, res) => {
     console.log(err)
   }
 })
+
+app.post('/locations', [upload.single('image'), authenticate], async function (req, res, next) {
+  const { address, category, name, url } = req.body;
+
+  if (!req.file || !address || !category || !name  || !url) {
+    res.status(400).send("Data is missing")
+    return;
+  }
+
+  const image = process.env.BASE_URL + "/" + req.file.path;
+  console.log("IMAGE", image)
+
+  const location = new Location({
+    name,
+    district: null,
+    address,
+    image,
+    category,
+  })
+ const result = await location.save()
+ console.log(result)
+  res.status(200).send("success")
+})
+
 // remove after testing
 app.get("/users", async (req, res) => {
   Auth.getUsers(req, res)

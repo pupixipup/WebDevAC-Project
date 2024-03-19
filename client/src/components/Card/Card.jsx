@@ -1,21 +1,13 @@
 import styles from "./Card.module.css"
 import { normalizeLink } from "../../shared/helpers"
 import { Link } from "react-router-dom"
-
+import { useAuthContext } from "../../hooks/useAuthHooks"
 export const Card = ({ location }) => {
   const { address, category, image, name, url } = location
+  const { user } = useAuthContext()
 
-  function componentClick() {
+  function startEdit() {
     console.log()
-  }
-  const handleDelete = async () => {
-    const url = new URL(
-      import.meta.env.VITE_BASE_URL + "/locations/" + location._id
-    )
-    const request = await fetch(url, { method: "DELETE" })
-    const json = await request.json()
-    window.location.reload()
-    return json
   }
 
   return (
@@ -26,7 +18,6 @@ export const Card = ({ location }) => {
       >
         <p className={styles.image_title}>{category}</p>
       </div>
-      {/* <img  src={image} /> */}
       <div className={styles.body}>
         <div>
           <h5>{name}</h5>
@@ -34,12 +25,9 @@ export const Card = ({ location }) => {
         </div>
         <div className={styles.links}>
           <a href={normalizeLink(url)} className={styles.link}>
-            Website
+            Link
           </a>
           <Link to={`/locations/${location._id}`}>More</Link>
-          <p className="font-bold cursor-pointer" onClick={handleDelete}>
-            Delete
-          </p>
         </div>
       </div>
     </div>

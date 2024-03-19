@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useLogout } from "../hooks/useLogout"
 import { useAuthContext } from "../hooks/useAuthHooks"
 
-export const Navbar = () => {
+export const Navbar = ({ placeholder }) => {
   const { logout } = useLogout()
   const { user } = useAuthContext()
 
@@ -11,6 +11,8 @@ export const Navbar = () => {
   }
 
   return (
+    <>
+      {placeholder && <div style={{height: "64px"}}></div>}
     <header className="navbar">
       <h1>
         {
@@ -23,6 +25,7 @@ export const Navbar = () => {
       <nav>
         {user && (
           <div className="user-container">
+            {user && <Link to="/create">Create</Link>}
             <span>
               {user?.name ? (
                 <Link to={`/profile/${user?.name}`}>{user?.name}</Link>
@@ -45,5 +48,6 @@ export const Navbar = () => {
         )}
       </nav>
     </header>
+  </>
   )
 }

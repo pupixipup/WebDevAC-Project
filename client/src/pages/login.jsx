@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { useLogin } from "../hooks/useLogin"
 import {} from "react-router-dom"
 import { useNavigate } from "react-router-dom"
@@ -9,16 +9,27 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const { user, token } = useContext(AuthContext)
+  const [err, setError] = useState(null)
   const { login, error, isLoading } = useLogin()
   const navigate = useNavigate()
   const { logout } = useLogout()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    await login(email, password)
-    navigate("/")
+    if (!email.trim() || !password.trim()) {
+      setError("All fields must be filled")
+      return;
+    }
+   const error = await login(email, password)
+   if (!error) {
+     navigate("/")
+    }
   }
+
+  useEffect(() => {
+    setError(null)
+  }, [email, password])
+
 
   if (user) {
     return (
@@ -55,9 +66,9 @@ const Login = () => {
           value={password}
         />
 
-        <button disabled={isLoading}>Log in</button>
-
-        {error && <div className="error">{error}</div>}
+        <button disabled={isLoading || err}>Log in</button>
+        {err && <div className="text-red-500">{err}</div>}
+        {error && <div className="text-red-500">{error}</div>}
       </form>
     </div>
   )
