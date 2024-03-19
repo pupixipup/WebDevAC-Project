@@ -74,6 +74,7 @@ button:focus-visible {
   align-items: center;
   /* background-color: var(--main-bg-color); */
   font-family: "Poppins", sans-serif;
+  margin-top: 20px;
   color: var(--main-bg-color);
 }
 .navbar a {
@@ -86,7 +87,6 @@ button:focus-visible {
 nav {
   display: flex;
   align-items: center;
-  margin: 20px;
 }
 nav * {
   margin-left: 20px;
@@ -179,6 +179,9 @@ input {
 @media (max-width: 600px) {
   .locations_grid {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+  nav * {
+    margin-left: 0;
   }
   .navbar button {
     scale: 0.8;

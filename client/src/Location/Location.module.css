@@ -43,8 +43,14 @@ h3 {
   font-size: 1.5em;
   text-align: center;
 }
+
 hr {
   margin-bottom: 10px;
+}
+
+.editLabel {
+  margin-top: 10px;
+  color: var(--main-dark-color);
 }
 
 .review {
