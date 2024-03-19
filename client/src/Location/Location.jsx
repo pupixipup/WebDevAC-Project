@@ -105,7 +105,7 @@ export const Location = (props) => {
               <h4 className="text-[1.6em]">{location.name}</h4>
               <hr />
               <span className="font-bold mb-2">{location.category}</span>
-              <address>{location.address}</address>
+              <address className="not-italic">{location.address}</address>
             </div>
             {user && user.role === "admin" && (
               <button
