@@ -8,7 +8,10 @@ const locationSchema = new mongoose.Schema({
     },
     address: String,
     url: String,
-    map_frame: String,
+    map_frame:  {
+        type: String,
+        allowNull: true
+    },
     image: String,
     category: String
 })

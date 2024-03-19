@@ -6,6 +6,7 @@ import { AuthContext } from "../context/authContext"
 import { useState } from "react"
 import { Review } from "../components"
 import { useFetch } from "../hooks/useFetch"
+import { useNavigate } from "react-router-dom"
 
 export async function locationLoader({ params }) {
   const id = params.locationId
@@ -16,18 +17,60 @@ export async function locationLoader({ params }) {
 }
 
 export const Location = (props) => {
+  const [mode, setMode] = useState("view")
   const params = useParams()
+  const navigate = useNavigate()
   const [description, setDescription] = useState("")
   const [rating, setRating] = useState(0)
   const data = useContext(AuthContext)
   const { user } = data
+  const [err, setError] = useState("")
   const location = useLoaderData()
+  const [name, setName] = useState(location.name ?? "")
+  const [category, setCategory] = useState(location.category ?? "")
+  const [address, setAddress] = useState(location.address ?? "")
   const [reviews, error, invalidate] = useFetch({
     url: "/reviews",
     parameters: {
       locationId: params.locationId,
     },
   })
+
+  const handleDelete = async () => {
+    const url = new URL(
+      import.meta.env.VITE_BASE_URL + "/locations/" + location._id
+    )
+    const request = await fetch(url, { method: "DELETE" })
+    const json = await request.json()
+    alert("Deleted successfully")
+    navigate("/")
+    return json
+  }
+
+  const handleEdit = async () => {
+    setMode((mode) => (mode === "view" ? "edit" : "view"))
+  }
+
+  const update = async () => {
+    if (!name.trim() || !address.trim() || !category.trim()) {
+      setError("All fields must not be empty!")
+      return
+    }
+    await fetch(
+      import.meta.env.VITE_BASE_URL + "/locations/" + params.locationId,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          name,
+          address,
+          category,
+        }),
+      }
+    )
+    window.location.reload()
+  }
 
   function submit(event) {
     event.preventDefault()
@@ -62,9 +105,25 @@ export const Location = (props) => {
               <h4 className="text-[1.6em]">{location.name}</h4>
               <hr />
               <span className="font-bold mb-2">{location.category}</span>
-              <address>{location.address}</address>
+              <address className="not-italic">{location.address}</address>
             </div>
-            <button className="w-[200px]">
+            {user && (
+              <button
+                onClick={handleDelete}
+                className="w-[130px] p-1 text-sm bg-red-500"
+              >
+                Delete
+              </button>
+            )}
+            {user && (
+              <button
+                onClick={handleEdit}
+                className="w-[130px] p-1 text-sm bg-yellow-500"
+              >
+                {mode === "edit" ? "View" : "Edit"}
+              </button>
+            )}
+            <button className="w-[130px] p-1 text-sm">
               <a
                 className="font-[500]"
                 target="_blank"
@@ -81,7 +140,42 @@ export const Location = (props) => {
               <Review key={review._id} review={review} />
             ))}
         </div>
-
+        {user && mode === "edit" && (
+          <div className="flex flex-col gap-1 mt-12">
+            <label className={styles.editLabel}>Location name</label>
+            <input
+              className="mt-0"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder="name"
+            />
+            <label className={styles.editLabel}>Location type</label>
+            <input
+              className="mt-0"
+              onChange={(e) => setCategory(e.target.value)}
+              value={category}
+              type="text"
+              placeholder="category"
+            />
+            <label className={styles.editLabel}>Location address</label>
+            <input
+              className="mt-0"
+              onChange={(e) => setAddress(e.target.value)}
+              value={address}
+              type="text"
+              placeholder="address"
+            />
+            <button
+              className="bg-[var(--button-bg-color)] text-bold w-[200px] m-auto"
+              onClick={update}
+              type="button"
+            >
+              Update
+            </button>
+            {err && <p className="text-red-400">{err}</p>}
+          </div>
+        )}
         {user ? (
           <form
             className="mb-3 mt-[20px] flex flex-col gap-3"

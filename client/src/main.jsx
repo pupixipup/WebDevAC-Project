@@ -9,15 +9,23 @@ import Login from "./pages/login.jsx"
 import Signup from "./pages/signup.jsx"
 import { Navbar } from "./components"
 import { Profile } from "./pages/profile.jsx"
+import { NewLocation } from "./pages/new-location.jsx"
 
-const Layout = ({ children }) => (
+const Layout = ({ children, placeholder }) => (
   <>
-    <Navbar />
+    <Navbar placeholder={placeholder} />
     {children}
   </>
 )
 
 const router = createBrowserRouter([
+  {
+    path: "/create",
+    element: (
+    <Layout placeholder={true}>
+      <NewLocation />
+    </Layout>)
+  },
   {
     loader: locationLoader,
     path: "/locations/:locationId",
