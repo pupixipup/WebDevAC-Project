@@ -107,7 +107,7 @@ export const Location = (props) => {
               <span className="font-bold mb-2">{location.category}</span>
               <address className="not-italic">{location.address}</address>
             </div>
-            {user && user.role === "admin" && (
+            {user && (
               <button
                 onClick={handleDelete}
                 className="w-[130px] p-1 text-sm bg-red-500"
@@ -115,7 +115,7 @@ export const Location = (props) => {
                 Delete
               </button>
             )}
-            {user && user.role === "admin" && (
+            {user && (
               <button
                 onClick={handleEdit}
                 className="w-[130px] p-1 text-sm bg-yellow-500"
